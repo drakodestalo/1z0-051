@@ -3,15 +3,10 @@
 
 define spp_years="(trunc(months_between(sysdate,hire_date) / 12))"
 
-select concat(concat(last_name, ', '), first_name) as employee_name, hire_date,
-  concat(
-    concat(&spp_years.,' año(s) y ' ) , concat(
+select last_name || ', ' || first_name as employee_name, hire_date,
+  &spp_years. || ' año(s) y ' || 
       trunc(months_between(sysdate,hire_date) - (&spp_years. * 12))
-      ,
-      ' mese(s)'
-      )
-  )
-  as diferencia, 
-  to_char(sysdate,'DD') - to_char(hire_date,'DD')
+      || ' mese(s) y ' || to_char(sysdate,'DD') - to_char(hire_date,'DD') || ' dia(s)' 
+  as diferencia
 from employees
 where department_id = 100
