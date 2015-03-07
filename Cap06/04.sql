@@ -3,4 +3,6 @@
 -- Outer join
 
 select department_name, count(employee_id) as total
-from <>
+from employees e right outer join departments d
+  on (e.department_id = d.department_id)
+group by department_name;
